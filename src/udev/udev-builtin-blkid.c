@@ -407,7 +407,7 @@ static int builtin_blkid(UdevEvent *event, int argc, char *argv[], bool test) {
         log_device_debug(dev, "Probe %s with %sraid and offset=%"PRIi64, devnode, noraid ? "no" : "", offset);
 
         r = probe_superblocks(pr);
-        if (r < 0)
+        if (r < 0 && r != _BLKID_SAFEPROBE_AMBIGUOUS)
                 return log_device_debug_errno(dev, r, "Failed to probe superblocks: %m");
 
         /* If the device is a partition then its parent passed the root partition UUID to the device */
